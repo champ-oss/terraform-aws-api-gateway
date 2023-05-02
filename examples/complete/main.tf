@@ -57,26 +57,3 @@ module "hash" {
   fallback = ""
 }
 
-module "acm" {
-  source            = "github.com/champ-oss/terraform-aws-acm.git?ref=v1.0.111-28fcc7c"
-  git               = local.git
-  domain_name       = "${local.hostname}.${data.aws_route53_zone.this.name}"
-  create_wildcard   = false
-  zone_id           = data.aws_route53_zone.this.zone_id
-  enable_validation = true
-}
-
-module "this" {
-  depends_on         = [module.keycloak, module.acm, time_sleep.this]
-  source             = "../../"
-  git                = local.git
-  certificate_arn    = module.acm.arn
-  domain_name        = "${local.hostname}.${data.aws_route53_zone.this.name}"
-  private_subnet_ids = data.aws_subnets.private.ids
-  vpc_id             = data.aws_vpcs.this.ids[0]
-  identity_sources   = ["$request.header.Authorization"]
-  integration_method = "POST"
-  jwt_audience       = ["account"]
-  jwt_issuer         = "${module.keycloak.keycloak_endpoint}/realms/master"
-  lambda_invoke_arn  = module.lambda.arn
-}

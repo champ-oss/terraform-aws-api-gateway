@@ -56,6 +56,18 @@ variable "domain_name" {
   type        = string
 }
 
+variable "enable_lambda_integration" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
+  type        = bool
+  default     = false
+}
+
+variable "enable_lb_integration" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
+  type        = bool
+  default     = false
+}
+
 variable "git" {
   description = "Name of the Git repo"
   type        = string
@@ -122,5 +134,10 @@ variable "tags" {
 
 variable "vpc_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group#vpc_id"
+  type        = string
+}
+
+variable "zone_id" {
+  description = "https://www.terraform.io/docs/providers/aws/r/route53_record.html#zone_id"
   type        = string
 }

@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_route" "lambda" {
-  count              = var.lambda_invoke_arn != null ? 1 : 0
+  count              = var.enable_lambda_integration ? 1 : 0
   api_id             = aws_apigatewayv2_api.this.id
   route_key          = "$default"
   authorization_type = "JWT"
@@ -8,7 +8,7 @@ resource "aws_apigatewayv2_route" "lambda" {
 }
 
 resource "aws_apigatewayv2_route" "lb" {
-  count              = var.lb_listener_arn != null ? 1 : 0
+  count              = var.enable_lb_integration ? 1 : 0
   api_id             = aws_apigatewayv2_api.this.id
   route_key          = "$default"
   authorization_type = "JWT"

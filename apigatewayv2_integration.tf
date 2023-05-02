@@ -1,6 +1,6 @@
 # Lambda integration
 resource "aws_apigatewayv2_integration" "lambda" {
-  count              = var.lambda_invoke_arn != null ? 1 : 0
+  count              = var.enable_lambda_integration ? 1 : 0
   api_id             = aws_apigatewayv2_api.this.id
   integration_type   = "AWS_PROXY"
   integration_method = var.integration_method
@@ -10,7 +10,7 @@ resource "aws_apigatewayv2_integration" "lambda" {
 
 # Application Load Balancer integration
 resource "aws_apigatewayv2_integration" "lb" {
-  count              = var.lb_listener_arn != null ? 1 : 0
+  count              = var.enable_lb_integration ? 1 : 0
   api_id             = aws_apigatewayv2_api.this.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"

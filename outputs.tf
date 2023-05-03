@@ -1,3 +1,13 @@
+output "account" {
+  description = "AWS Account ID"
+  value       = data.aws_caller_identity.this.account_id
+}
+
+output "aws_region" {
+  description = "AWS Region"
+  value       = data.aws_region.this.name
+}
+
 output "api_endpoint" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#api_endpoint"
   value       = aws_apigatewayv2_api.this.api_endpoint

@@ -65,6 +65,7 @@ module "acm_keycloak" {
 module "keycloak" {
   depends_on          = [module.acm_keycloak]
   source              = "github.com/champ-oss/terraform-aws-keycloak.git?ref=v1.0.23-30e273e"
+  git                 = "${local.git}-${random_string.this.result}"
   certificate_arn     = module.acm_keycloak.arn
   public_subnet_ids   = data.aws_subnets.public.ids
   private_subnet_ids  = data.aws_subnets.private.ids

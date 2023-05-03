@@ -76,9 +76,9 @@ module "app" {
   cluster                           = module.core.ecs_cluster_name
   security_groups                   = [module.core.ecs_app_security_group]
   execution_role_arn                = module.core.execution_ecs_role_arn
-  listener_arn                      = module.core.lb_public_listener_arn
-  lb_dns_name                       = module.core.lb_public_dns_name
-  lb_zone_id                        = module.core.lb_public_zone_id
+  listener_arn                      = module.core.lb_private_listener_arn
+  lb_dns_name                       = module.core.lb_private_dns_name
+  lb_zone_id                        = module.core.lb_private_zone_id
   enable_route53                    = true
   name                              = "test"
   dns_name                          = "${local.hostname}.${data.aws_route53_zone.this.name}"

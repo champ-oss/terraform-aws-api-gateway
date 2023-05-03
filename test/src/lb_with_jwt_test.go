@@ -8,14 +8,14 @@ import (
 	"testing"
 )
 
-func TestLambdaWithJwt(t *testing.T) {
+func TestLbWithJwt(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../../examples/lambda_with_jwt",
+		TerraformDir: "../../examples/lb_with_jwt",
 		BackendConfig: map[string]interface{}{
 			"bucket": os.Getenv("TF_STATE_BUCKET"),
-			"key":    os.Getenv("TF_VAR_git") + "-lambda_with_jwt",
+			"key":    os.Getenv("TF_VAR_git") + "-lb_with_jwt",
 		},
 		EnvVars: map[string]string{},
 		Vars:    map[string]interface{}{},

@@ -12,12 +12,12 @@ data "aws_route53_zone" "this" {
 
 # Used to test JWT auth with the API Gateway authorizer
 module "keycloak" {
-  source = "../shared_modules/keycloak"
+  source = "../keycloak"
 }
 
-# Deploy a Lambda for API Gateway integration
-module "lambda" {
-  source = "../shared_modules/python_lambda"
+# Deploy an ECS service behind an ALB for API Gateway integration
+module "lb_ecs" {
+  source = "../shared_modules/lb_ecs"
 }
 
 resource "random_string" "this" {
@@ -40,8 +40,10 @@ module "this" {
   domain_name               = "${local.hostname}.${data.aws_route53_zone.this.name}"
   zone_id                   = data.aws_route53_zone.this.zone_id
   enable_create_certificate = true
-  enable_lambda_integration = true
-  lambda_invoke_arn         = module.lambda.arn
+  enable_lb_integration     = true
+  lb_listener_arn           = module.lb_ecs.lb_public_listener_arn
+  private_subnet_ids        = module.lb_ecs.private_subnet_ids
+  security_group_ids        = [module.lb_ecs.ecs_app_security_group]
   identity_sources          = ["$request.header.Authorization"]
   integration_method        = "POST"
   jwt_audience              = ["account"]

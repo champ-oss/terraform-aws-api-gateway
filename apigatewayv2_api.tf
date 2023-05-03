@@ -14,9 +14,3 @@ resource "aws_apigatewayv2_api" "this" {
     max_age           = var.cors_configuration_max_age
   }
 }
-
-
-
-
-
-

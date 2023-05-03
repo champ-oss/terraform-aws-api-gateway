@@ -6,4 +6,5 @@ module "acm" {
   create_wildcard   = false
   zone_id           = var.zone_id
   enable_validation = true
+  tags              = merge(local.tags, var.tags)
 }

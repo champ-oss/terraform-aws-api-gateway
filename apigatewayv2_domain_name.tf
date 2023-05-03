@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_domain_name" "this" {
   tags        = merge(local.tags, var.tags)
 
   domain_name_configuration {
-    certificate_arn = var.certificate_arn
+    certificate_arn = var.enable_create_certificate ? module.acm[0].arn : var.certificate_arn
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }

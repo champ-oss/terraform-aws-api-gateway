@@ -1,3 +1,58 @@
+terraform {
+  required_providers {
+    keycloak = {
+      source = "mrparkers/keycloak"
+    }
+  }
+}
+
+data "aws_route53_zone" "this" {
+  name = "oss.champtest.net."
+}
+
+data "aws_vpcs" "this" {
+  tags = {
+    purpose = "vega"
+  }
+}
+
+data "aws_subnets" "private" {
+  tags = {
+    purpose = "vega"
+    Type    = "Private"
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpcs.this.ids[0]]
+  }
+}
+
+data "aws_subnets" "public" {
+  tags = {
+    purpose = "vega"
+    Type    = "Public"
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpcs.this.ids[0]]
+  }
+}
+
+resource "random_string" "this" {
+  length  = 5
+  special = false
+  upper   = false
+  lower   = true
+  numeric = true
+}
+
+locals {
+  git               = "terraform-aws-api-gateway"
+  keycloak_hostname = "keycloak-${random_string.this.result}"
+}
+
 module "acm_keycloak" {
   source            = "github.com/champ-oss/terraform-aws-acm.git?ref=v1.0.111-28fcc7c"
   git               = local.git
@@ -7,7 +62,6 @@ module "acm_keycloak" {
   enable_validation = true
 }
 
-# Used to test JWT auth with the API Gateway authorizer
 module "keycloak" {
   depends_on          = [module.acm_keycloak]
   source              = "github.com/champ-oss/terraform-aws-keycloak.git?ref=v1.0.23-30e273e"

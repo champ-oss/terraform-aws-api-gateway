@@ -16,20 +16,18 @@ import (
 )
 
 const (
-	region            = "us-east-2"
 	retryDelaySeconds = 5
 	retryAttempts     = 36
 )
 
-// TestExamplesComplete tests a typical deployment of this module
-func TestExamplesComplete(t *testing.T) {
+func TestLambdaWithJwt(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../../examples/complete",
+		TerraformDir: "../../examples/lambda_with_jwt",
 		BackendConfig: map[string]interface{}{
 			"bucket": os.Getenv("TF_STATE_BUCKET"),
-			"key":    os.Getenv("TF_VAR_git"),
+			"key":    os.Getenv("TF_VAR_git") + "-lambda_with_jwt",
 		},
 		EnvVars: map[string]string{},
 		Vars:    map[string]interface{}{},

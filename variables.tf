@@ -1,6 +1,7 @@
 variable "certificate_arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#certificate_arn"
   type        = string
+  default     = null
 }
 
 variable "cors_configuration_allow_credentials" {
@@ -54,6 +55,12 @@ variable "disable_execute_api_endpoint" {
 variable "domain_name" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
   type        = string
+}
+
+variable "enable_create_certificate" {
+  description = "Create an ACM certificate"
+  type        = bool
+  default     = true
 }
 
 variable "enable_lambda_integration" {
@@ -112,6 +119,7 @@ variable "lb_listener_arn" {
 variable "private_subnet_ids" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group#subnet_ids"
   type        = list(string)
+  default     = []
 }
 
 variable "retention_in_days" {
@@ -130,11 +138,6 @@ variable "tags" {
   description = "Map of tags to assign to resources"
   type        = map(string)
   default     = {}
-}
-
-variable "vpc_id" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group#vpc_id"
-  type        = string
 }
 
 variable "zone_id" {

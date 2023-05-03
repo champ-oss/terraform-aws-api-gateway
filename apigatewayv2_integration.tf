@@ -19,10 +19,10 @@ resource "aws_apigatewayv2_integration" "lb" {
   connection_id      = aws_apigatewayv2_vpc_link.this[0].id
 
   tls_config {
-    server_name_to_verify = var.domain_name
+    server_name_to_verify = var.lb_domain_name
   }
 
   request_parameters = {
-    "overwrite:header.host" = var.domain_name
+    "overwrite:header.host" = var.lb_domain_name
   }
 }

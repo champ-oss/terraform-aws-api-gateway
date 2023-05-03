@@ -116,6 +116,12 @@ variable "lb_listener_arn" {
   default     = null
 }
 
+variable "lb_domain_name" {
+  description = "Domain name the load balancer expects"
+  type        = string
+  default     = null
+}
+
 variable "private_subnet_ids" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group#subnet_ids"
   type        = list(string)

@@ -48,4 +48,5 @@ module "this" {
   integration_method        = "POST"
   jwt_audience              = ["account"]
   jwt_issuer                = "${module.keycloak.keycloak_endpoint}/realms/master"
+  lb_domain_name            = module.lb_ecs.dns_name
 }

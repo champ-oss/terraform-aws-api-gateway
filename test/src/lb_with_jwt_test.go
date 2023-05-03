@@ -33,5 +33,5 @@ func TestLbWithJwt(t *testing.T) {
 
 	// Get a JWT from Keycloak and test a successful request
 	jwt := getKeycloakJwt(t, keycloakEndpoint, "master", "admin", keycloakPassword)
-	assert.NoError(t, checkHttpStatusAndBody(t, apiGatewayEndpoint, jwt, "successful", http.StatusOK))
+	assert.NoError(t, checkHttpStatusAndBody(t, apiGatewayEndpoint, jwt, "Hello world", http.StatusOK))
 }

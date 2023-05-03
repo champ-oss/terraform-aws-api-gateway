@@ -12,7 +12,7 @@ data "aws_route53_zone" "this" {
 
 # Used to test JWT auth with the API Gateway authorizer
 module "keycloak" {
-  source = "../keycloak"
+  source = "../shared_modules/keycloak"
 }
 
 # Deploy an ECS service behind an ALB for API Gateway integration

@@ -4,7 +4,7 @@ resource "aws_apigatewayv2_integration" "lambda" {
   api_id             = aws_apigatewayv2_api.this[0].id
   integration_type   = "AWS_PROXY"
   integration_method = var.integration_method
-  integration_uri    = var.lambda_invoke_arn
+  integration_uri    = var.lambda_arn
   connection_type    = "INTERNET"
 }
 

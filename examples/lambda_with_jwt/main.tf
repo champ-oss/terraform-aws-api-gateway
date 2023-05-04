@@ -42,7 +42,7 @@ module "this" {
   enable_create_certificate = true
   enable_lambda_integration = true
   enable_api_gateway_v2     = true
-  lambda_invoke_arn         = module.lambda.arn
+  lambda_arn                = module.lambda.arn
   identity_sources          = ["$request.header.Authorization"]
   integration_method        = "POST"
   jwt_audience              = ["account"]

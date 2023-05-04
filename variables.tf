@@ -116,8 +116,8 @@ variable "jwt_issuer" {
   default     = ""
 }
 
-variable "lambda_invoke_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
+variable "lambda_arn" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#arn"
   type        = string
   default     = null
 }

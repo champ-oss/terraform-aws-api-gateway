@@ -35,6 +35,6 @@ module "this" {
   zone_id                   = data.aws_route53_zone.this.zone_id
   enable_create_certificate = true
   enable_lambda_integration = true
-  lambda_invoke_arn         = module.lambda.arn
+  lambda_arn                = module.lambda.arn
   enable_api_gateway_v1     = true
 }

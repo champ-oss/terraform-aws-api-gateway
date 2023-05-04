@@ -60,7 +60,35 @@ resource "aws_api_gateway_domain_name" "this" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "this" {
+  count       = var.enable_api_gateway_v1 ? 1 : 0
   api_id      = aws_api_gateway_rest_api.this[0].id
   stage_name  = aws_api_gateway_stage.this[0].stage_name
   domain_name = aws_api_gateway_domain_name.this[0].domain_name
+}
+
+data "aws_iam_policy_document" "this" {
+  count = var.enable_api_gateway_v1 ? 1 : 0
+
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions   = ["execute-api:Invoke"]
+    resources = [aws_api_gateway_rest_api.this[0].execution_arn]
+
+    condition {
+      test     = "IpAddress"
+      variable = "aws:SourceIp"
+      values   = ["0.0.0.0/32"]
+    }
+  }
+}
+resource "aws_api_gateway_rest_api_policy" "this" {
+  count       = var.enable_api_gateway_v1 ? 1 : 0
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  policy      = data.aws_iam_policy_document.this[0].json
 }

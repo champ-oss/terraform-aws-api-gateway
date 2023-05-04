@@ -37,7 +37,7 @@ module "this" {
   depends_on                = [module.keycloak]
   source                    = "../../"
   git                       = local.git
-  domain_name               = "${local.hostname}.${data.aws_route53_zone.this.name}"
+  api_gateway_v2_domain_name               = "${local.hostname}.${data.aws_route53_zone.this.name}"
   zone_id                   = data.aws_route53_zone.this.zone_id
   enable_create_certificate = true
   enable_lb_integration     = true

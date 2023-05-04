@@ -5,7 +5,7 @@ variable "certificate_arn" {
 }
 
 variable "cidr_blocks" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
+  description = "IP CIDR ranges to whitelist (maximum of around 400 IP ranges)"
   default     = ["0.0.0.0/0"]
   type        = list(string)
 }

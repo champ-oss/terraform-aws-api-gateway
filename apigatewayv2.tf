@@ -98,19 +98,19 @@ resource "aws_apigatewayv2_stage" "this" {
 }
 
 resource "aws_apigatewayv2_domain_name" "this" {
-  count       = var.enable_api_gateway_v2 && var.api_gateway_v2_domain_name != null ? 1 : 0
+  count       = var.enable_api_gateway_v2 ? 1 : 0
   domain_name = var.api_gateway_v2_domain_name
   tags        = merge(local.tags, var.tags)
 
   domain_name_configuration {
-    certificate_arn = var.enable_create_certificate ? module.acm[0].arn : var.certificate_arn
+    certificate_arn = var.enable_create_certificate ? module.acm_api_gateway_v2[0].arn : var.certificate_arn
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }
 }
 
 resource "aws_apigatewayv2_api_mapping" "this" {
-  count       = var.enable_api_gateway_v2 && var.api_gateway_v2_domain_name != null ? 1 : 0
+  count       = var.enable_api_gateway_v2 ? 1 : 0
   api_id      = aws_apigatewayv2_api.this[0].id
   domain_name = aws_apigatewayv2_domain_name.this[0].id
   stage       = aws_apigatewayv2_stage.this[0].id

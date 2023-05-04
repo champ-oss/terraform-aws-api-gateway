@@ -4,6 +4,12 @@ variable "certificate_arn" {
   default     = null
 }
 
+variable "cidr_blocks" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
+  default     = ["0.0.0.0/0"]
+  type        = list(string)
+}
+
 variable "cors_configuration_allow_credentials" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_credentials"
   type        = bool

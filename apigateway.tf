@@ -25,6 +25,7 @@ resource "aws_api_gateway_integration" "this" {
 }
 
 resource "aws_api_gateway_deployment" "this" {
+  depends_on  = [aws_api_gateway_rest_api_policy.this]
   count       = var.enable_api_gateway_v1 ? 1 : 0
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   triggers = {
@@ -33,6 +34,7 @@ resource "aws_api_gateway_deployment" "this" {
       aws_api_gateway_rest_api.this[0].root_resource_id,
       aws_api_gateway_method.this[0].id,
       aws_api_gateway_integration.this[0].id,
+      var.cidr_blocks
     ]))
   }
 
@@ -78,12 +80,12 @@ data "aws_iam_policy_document" "this" {
     }
 
     actions   = ["execute-api:Invoke"]
-    resources = [aws_api_gateway_rest_api.this[0].execution_arn]
+    resources = ["${aws_api_gateway_rest_api.this[0].execution_arn}*"]
 
     condition {
       test     = "IpAddress"
       variable = "aws:SourceIp"
-      values   = ["0.0.0.0/32"]
+      values   = var.cidr_blocks
     }
   }
 }

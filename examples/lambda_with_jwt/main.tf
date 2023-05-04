@@ -1,5 +1,9 @@
 terraform {
-  backend "s3" {}
+  backend "s3" {
+    bucket = "env-tfbackend-oss-backend"
+    key    = "terraform-aws-api-gateway-lambda_with_jwt"
+    region = "us-east-2"
+  }
 }
 
 provider "aws" {

@@ -4,7 +4,6 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -12,13 +11,10 @@ func TestLambdaWithJwt(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../../examples/lambda_with_jwt",
-		BackendConfig: map[string]interface{}{
-			"bucket": os.Getenv("TF_STATE_BUCKET"),
-			"key":    os.Getenv("TF_VAR_git") + "-lambda_with_jwt",
-		},
-		EnvVars: map[string]string{},
-		Vars:    map[string]interface{}{},
+		TerraformDir:  "../../examples/lambda_with_jwt",
+		BackendConfig: map[string]interface{}{},
+		EnvVars:       map[string]string{},
+		Vars:          map[string]interface{}{},
 	}
 	defer terraform.Destroy(t, terraformOptions)
 

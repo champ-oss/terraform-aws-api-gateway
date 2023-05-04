@@ -63,6 +63,18 @@ variable "enable_create_certificate" {
   default     = true
 }
 
+variable "enable_api_gateway_v1" {
+  description = "Supports IP whitelisting"
+  type        = bool
+  default     = false
+}
+
+variable "enable_api_gateway_v2" {
+  description = "Supports JWT authorization"
+  type        = bool
+  default     = false
+}
+
 variable "enable_lambda_integration" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
   type        = bool

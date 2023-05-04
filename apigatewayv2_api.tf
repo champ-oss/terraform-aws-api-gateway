@@ -1,4 +1,5 @@
 resource "aws_apigatewayv2_api" "this" {
+  count                        = var.enable_api_gateway_v2 ? 1 : 0
   description                  = var.description
   disable_execute_api_endpoint = var.disable_execute_api_endpoint
   name                         = "${var.git}-${random_string.this.result}"

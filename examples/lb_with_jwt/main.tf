@@ -41,6 +41,7 @@ module "this" {
   zone_id                   = data.aws_route53_zone.this.zone_id
   enable_create_certificate = true
   enable_lb_integration     = true
+  enable_api_gateway_v2     = true
   lb_listener_arn           = module.lb_ecs.lb_private_listener_arn
   private_subnet_ids        = module.lb_ecs.private_subnet_ids
   security_group_ids        = [module.lb_ecs.ecs_app_security_group]

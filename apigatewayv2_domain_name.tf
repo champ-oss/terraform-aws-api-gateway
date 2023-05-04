@@ -1,4 +1,5 @@
 resource "aws_apigatewayv2_domain_name" "this" {
+  count       = var.enable_api_gateway_v2 ? 1 : 0
   domain_name = var.domain_name
   tags        = merge(local.tags, var.tags)
 

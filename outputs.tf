@@ -10,22 +10,22 @@ output "aws_region" {
 
 output "api_endpoint" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#api_endpoint"
-  value       = aws_apigatewayv2_api.this.api_endpoint
+  value       = aws_apigatewayv2_api.this[0].api_endpoint
 }
 
 output "arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#arn"
-  value       = aws_apigatewayv2_api.this.arn
+  value       = aws_apigatewayv2_api.this[0].arn
 }
 
 output "execution_arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#execution_arn"
-  value       = aws_apigatewayv2_api.this.execution_arn
+  value       = aws_apigatewayv2_api.this[0].execution_arn
 }
 
 output "id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#id"
-  value       = aws_apigatewayv2_api.this.id
+  value       = aws_apigatewayv2_api.this[0].id
 }
 
 output "private_subnet_ids" {

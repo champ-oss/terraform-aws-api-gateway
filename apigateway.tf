@@ -15,7 +15,7 @@ resource "aws_api_gateway_method" "this" {
   rest_api_id   = aws_api_gateway_rest_api.this[0].id
   resource_id   = aws_api_gateway_rest_api.this[0].root_resource_id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "NONE" # NOSONAR uses IP whitelisting
 }
 
 resource "aws_api_gateway_method_settings" "this" {
@@ -109,7 +109,7 @@ data "aws_iam_policy_document" "this" {
 
     principals {
       type        = "AWS"
-      identifiers = ["*"]
+      identifiers = ["*"] # NOSONAR uses IP whitelisting
     }
 
     actions   = ["execute-api:Invoke"]

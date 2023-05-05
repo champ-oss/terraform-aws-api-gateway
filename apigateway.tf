@@ -87,6 +87,7 @@ resource "aws_api_gateway_domain_name" "this" {
   domain_name              = var.api_gateway_v1_domain_name
   tags                     = merge(local.tags, var.tags)
   regional_certificate_arn = var.enable_create_certificate ? module.acm_api_gateway_v1[0].arn : var.certificate_arn
+  security_policy          = "TLS_1_2"
 
   endpoint_configuration {
     types = ["REGIONAL"]

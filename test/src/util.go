@@ -64,6 +64,7 @@ func checkHttpStatusAndBody(t *testing.T, url, authToken, expectedBody string, e
 
 func destroy(t *testing.T, options *terraform.Options) {
 	t.Log("removing keycloak resources from state")
+	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.time_sleep.this")
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_realm.this")
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_openid_client_scope.this")
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.keycloak_openid_audience_protocol_mapper.this")

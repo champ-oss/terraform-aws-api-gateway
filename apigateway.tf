@@ -19,6 +19,7 @@ resource "aws_api_gateway_method" "this" {
 }
 
 resource "aws_api_gateway_method_settings" "this" {
+  count       = var.enable_api_gateway_v1 ? 1 : 0
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   stage_name  = aws_api_gateway_stage.this[0].stage_name
   method_path = "*/*"

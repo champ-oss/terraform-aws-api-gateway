@@ -68,5 +68,5 @@ func destroy(t *testing.T, options *terraform.Options) {
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_realm.this")
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_openid_client_scope.this")
 	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.keycloak_openid_audience_protocol_mapper.this")
-	terraform.Destroy(t, options)
+	_, _ = terraform.DestroyE(t, options)
 }

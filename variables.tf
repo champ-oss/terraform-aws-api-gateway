@@ -1,3 +1,27 @@
+variable "api_gateway_v1_domain_name" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#domain_name"
+  type        = string
+  default     = null
+}
+
+variable "api_gateway_v2_domain_name" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
+  type        = string
+  default     = null
+}
+
+variable "api_gateway_v1_endpoint_type" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#types"
+  type        = string
+  default     = "REGIONAL"
+}
+
+variable "api_gateway_v1_logging_level" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_settings#logging_level"
+  type        = string
+  default     = "INFO"
+}
+
 variable "certificate_arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#certificate_arn"
   type        = string
@@ -56,18 +80,6 @@ variable "disable_execute_api_endpoint" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#disable_execute_api_endpoint"
   type        = bool
   default     = false
-}
-
-variable "api_gateway_v1_domain_name" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#domain_name"
-  type        = string
-  default     = null
-}
-
-variable "api_gateway_v2_domain_name" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
-  type        = string
-  default     = null
 }
 
 variable "enable_create_certificate" {

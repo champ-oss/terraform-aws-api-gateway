@@ -4,6 +4,10 @@ resource "aws_api_gateway_rest_api" "this" {
   description                  = var.description
   disable_execute_api_endpoint = var.disable_execute_api_endpoint
   tags                         = merge(local.tags, var.tags)
+
+  endpoint_configuration {
+    types = [var.api_gateway_v1_endpoint_type]
+  }
 }
 
 resource "aws_api_gateway_method" "this" {
@@ -12,6 +16,17 @@ resource "aws_api_gateway_method" "this" {
   resource_id   = aws_api_gateway_rest_api.this[0].root_resource_id
   http_method   = "ANY"
   authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_settings" "this" {
+  rest_api_id = aws_api_gateway_rest_api.this[0].id
+  stage_name  = aws_api_gateway_stage.this[0].stage_name
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = true
+    logging_level   = var.api_gateway_v1_logging_level
+  }
 }
 
 resource "aws_api_gateway_integration" "this" {
@@ -48,6 +63,23 @@ resource "aws_api_gateway_stage" "this" {
   deployment_id = aws_api_gateway_deployment.this[0].id
   rest_api_id   = aws_api_gateway_rest_api.this[0].id
   stage_name    = "this"
+  tags          = merge(local.tags, var.tags)
+
+  access_log_settings {
+    destination_arn = "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/apigateway/${aws_api_gateway_rest_api.this[0].name}"
+    format = jsonencode({
+      "requestId" : "$context.requestId",
+      "ip" : "$context.identity.sourceIp",
+      "caller" : "$context.identity.caller",
+      "user" : "$context.identity.user",
+      "requestTime" : "$context.requestTime",
+      "httpMethod" : "$context.httpMethod",
+      "resourcePath" : "$context.resourcePath",
+      "status" : "$context.status",
+      "protocol" : "$context.protocol",
+      "responseLength" : "$context.responseLength"
+    })
+  }
 }
 
 resource "aws_api_gateway_domain_name" "this" {
@@ -93,4 +125,9 @@ resource "aws_api_gateway_rest_api_policy" "this" {
   count       = var.enable_api_gateway_v1 ? 1 : 0
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   policy      = data.aws_iam_policy_document.this[0].json
+}
+
+resource "aws_api_gateway_account" "this" {
+  count               = var.enable_api_gateway_v1 ? 1 : 0
+  cloudwatch_role_arn = aws_iam_role.this[0].arn
 }

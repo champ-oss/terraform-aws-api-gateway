@@ -59,11 +59,12 @@ resource "aws_api_gateway_deployment" "this" {
 }
 
 resource "aws_api_gateway_stage" "this" {
-  count         = var.enable_api_gateway_v1 ? 1 : 0
-  deployment_id = aws_api_gateway_deployment.this[0].id
-  rest_api_id   = aws_api_gateway_rest_api.this[0].id
-  stage_name    = "this"
-  tags          = merge(local.tags, var.tags)
+  count                = var.enable_api_gateway_v1 ? 1 : 0
+  deployment_id        = aws_api_gateway_deployment.this[0].id
+  rest_api_id          = aws_api_gateway_rest_api.this[0].id
+  stage_name           = "this"
+  xray_tracing_enabled = true
+  tags                 = merge(local.tags, var.tags)
 
   access_log_settings {
     destination_arn = "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/apigateway/${aws_api_gateway_rest_api.this[0].name}"

@@ -1,7 +1,37 @@
+variable "api_gateway_v1_domain_name" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#domain_name"
+  type        = string
+  default     = null
+}
+
+variable "api_gateway_v2_domain_name" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
+  type        = string
+  default     = null
+}
+
+variable "api_gateway_v1_endpoint_type" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#types"
+  type        = string
+  default     = "REGIONAL"
+}
+
+variable "api_gateway_v1_logging_level" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_settings#logging_level"
+  type        = string
+  default     = "INFO"
+}
+
 variable "certificate_arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#certificate_arn"
   type        = string
   default     = null
+}
+
+variable "cidr_blocks" {
+  description = "IP CIDR ranges to whitelist (maximum of around 400 IP ranges)"
+  default     = ["0.0.0.0/0"]
+  type        = list(string)
 }
 
 variable "cors_configuration_allow_credentials" {
@@ -52,15 +82,22 @@ variable "disable_execute_api_endpoint" {
   default     = false
 }
 
-variable "domain_name" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
-  type        = string
-}
-
 variable "enable_create_certificate" {
   description = "Create an ACM certificate"
   type        = bool
   default     = true
+}
+
+variable "enable_api_gateway_v1" {
+  description = "Supports IP whitelisting"
+  type        = bool
+  default     = false
+}
+
+variable "enable_api_gateway_v2" {
+  description = "Supports JWT authorization"
+  type        = bool
+  default     = false
 }
 
 variable "enable_lambda_integration" {
@@ -104,8 +141,8 @@ variable "jwt_issuer" {
   default     = ""
 }
 
-variable "lambda_invoke_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
+variable "lambda_arn" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#arn"
   type        = string
   default     = null
 }

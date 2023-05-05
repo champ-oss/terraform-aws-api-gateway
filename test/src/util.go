@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/Nerzal/gocloak/v13"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"io/ioutil"
 	k8sStrings "k8s.io/utils/strings"
 	"net/http"
@@ -59,4 +60,13 @@ func checkHttpStatusAndBody(t *testing.T, url, authToken, expectedBody string, e
 		t.Logf("Retrying in %d seconds...", retryDelaySeconds)
 		time.Sleep(time.Second * retryDelaySeconds)
 	}
+}
+
+func destroy(t *testing.T, options *terraform.Options) {
+	t.Log("removing keycloak resources from state")
+	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.time_sleep.this")
+	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_realm.this")
+	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.data.keycloak_openid_client_scope.this")
+	_, _ = terraform.RunTerraformCommandE(t, options, "state", "rm", "module.keycloak.keycloak_openid_audience_protocol_mapper.this")
+	_, _ = terraform.DestroyE(t, options)
 }

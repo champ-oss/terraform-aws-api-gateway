@@ -9,8 +9,13 @@ output "aws_region" {
 }
 
 output "api_gateway_v1_id" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#id"
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#id"
   value       = var.enable_api_gateway_v1 ? aws_api_gateway_rest_api.this[0].id : null
+}
+
+output "api_gateway_v1_root_resource_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#root_resource_id"
+  value       = var.enable_api_gateway_v1 ? aws_api_gateway_rest_api.this[0].root_resource_id : null
 }
 
 output "api_gateway_v2_api_endpoint" {

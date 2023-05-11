@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/Nerzal/gocloak/v13 v13.5.0
-	github.com/gruntwork-io/terratest v0.41.23
+	github.com/gruntwork-io/terratest v0.41.24
 	github.com/stretchr/testify v1.8.2
 	k8s.io/utils v0.0.0-20201110183641-67b214c5f920
 )

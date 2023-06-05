@@ -6,6 +6,7 @@ module "acm_api_gateway_v1" {
   create_wildcard   = false
   zone_id           = var.zone_id
   enable_validation = true
+  time_sleep        = 60
   tags              = merge(local.tags, var.tags)
 }
 
@@ -17,5 +18,6 @@ module "acm_api_gateway_v2" {
   create_wildcard   = false
   zone_id           = var.zone_id
   enable_validation = true
+  time_sleep        = 60
   tags              = merge(local.tags, var.tags)
 }

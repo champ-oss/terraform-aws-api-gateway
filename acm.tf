@@ -1,6 +1,6 @@
 module "acm_api_gateway_v1" {
   count             = var.enable_create_certificate && var.enable_api_gateway_v1 ? 1 : 0
-  source            = "github.com/champ-oss/terraform-aws-acm.git?ref=v1.0.111-28fcc7c"
+  source            = "github.com/champ-oss/terraform-aws-acm.git?ref=v1.0.113-5d72ba8"
   git               = var.git
   domain_name       = var.api_gateway_v1_domain_name
   create_wildcard   = false

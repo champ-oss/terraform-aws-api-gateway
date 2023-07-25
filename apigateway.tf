@@ -86,7 +86,7 @@ resource "aws_api_gateway_stage" "this" {
 }
 
 resource "aws_api_gateway_domain_name" "this" {
-  count                    = var.enable_api_gateway_v1 ? 1 : 0
+  count                    = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_domain_name ? 1 : 0
   domain_name              = var.api_gateway_v1_domain_name
   tags                     = merge(local.tags, var.tags)
   regional_certificate_arn = var.enable_create_certificate ? module.acm_api_gateway_v1[0].arn : var.certificate_arn
@@ -98,7 +98,7 @@ resource "aws_api_gateway_domain_name" "this" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "this" {
-  count       = var.enable_api_gateway_v1 ? 1 : 0
+  count       = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_domain_name ? 1 : 0
   api_id      = aws_api_gateway_rest_api.this[0].id
   stage_name  = aws_api_gateway_stage.this[0].stage_name
   domain_name = aws_api_gateway_domain_name.this[0].domain_name

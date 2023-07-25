@@ -8,6 +8,12 @@ output "aws_region" {
   value       = data.aws_region.this.name
 }
 
+output "api_gateway_v1_api_key_value" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key#value"
+  sensitive   = true
+  value       = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? aws_api_gateway_api_key.this[0].value : null
+}
+
 output "api_gateway_v1_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#id"
   value       = var.enable_api_gateway_v1 ? aws_api_gateway_rest_api.this[0].id : null
@@ -43,7 +49,3 @@ output "private_subnet_ids" {
   value       = var.private_subnet_ids
 }
 
-output "api_gateway_v1_api_key_value" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key#value"
-  value       = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? aws_api_gateway_api_key.this[0].value : null
-}

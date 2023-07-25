@@ -42,3 +42,8 @@ output "private_subnet_ids" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group#subnet_ids"
   value       = var.private_subnet_ids
 }
+
+output "api_gateway_v1_api_key_value" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key#value"
+  value       = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? aws_api_gateway_api_key.this[0].value : null
+}

@@ -187,3 +187,15 @@ variable "zone_id" {
   description = "https://www.terraform.io/docs/providers/aws/r/route53_record.html#zone_id"
   type        = string
 }
+
+variable "enable_api_gateway_v1_api_key" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key"
+  type        = bool
+  default     = false
+}
+
+variable "api_gateway_v1_api_key_value" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key#value"
+  type        = string
+  default     = null
+}

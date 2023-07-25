@@ -33,13 +33,14 @@ locals {
 }
 
 module "this" {
-  source                     = "../../"
-  git                        = local.git
-  api_gateway_v1_domain_name = "${local.hostname}.${data.aws_route53_zone.this.name}"
-  zone_id                    = data.aws_route53_zone.this.zone_id
-  enable_create_certificate  = true
-  enable_lambda_integration  = true
-  lambda_arn                 = module.lambda.arn
-  enable_api_gateway_v1      = true
-  cidr_blocks                = ["0.0.0.0/0"]
+  source                        = "../../"
+  git                           = local.git
+  api_gateway_v1_domain_name    = "${local.hostname}.${data.aws_route53_zone.this.name}"
+  zone_id                       = data.aws_route53_zone.this.zone_id
+  enable_create_certificate     = true
+  enable_lambda_integration     = true
+  lambda_arn                    = module.lambda.arn
+  enable_api_gateway_v1         = true
+  cidr_blocks                   = ["0.0.0.0/0"]
+  enable_api_gateway_v1_api_key = true
 }

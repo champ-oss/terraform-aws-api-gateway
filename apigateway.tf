@@ -11,11 +11,12 @@ resource "aws_api_gateway_rest_api" "this" {
 }
 
 resource "aws_api_gateway_method" "this" {
-  count         = var.enable_api_gateway_v1 ? 1 : 0
-  rest_api_id   = aws_api_gateway_rest_api.this[0].id
-  resource_id   = aws_api_gateway_rest_api.this[0].root_resource_id
-  http_method   = "ANY"
-  authorization = "NONE" # NOSONAR uses IP whitelisting
+  count            = var.enable_api_gateway_v1 ? 1 : 0
+  rest_api_id      = aws_api_gateway_rest_api.this[0].id
+  resource_id      = aws_api_gateway_rest_api.this[0].root_resource_id
+  http_method      = "ANY"
+  authorization    = "NONE" # NOSONAR uses IP whitelisting
+  api_key_required = var.enable_api_gateway_v1_api_key
 }
 
 resource "aws_api_gateway_method_settings" "this" {

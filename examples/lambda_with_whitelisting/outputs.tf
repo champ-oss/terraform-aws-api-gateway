@@ -5,5 +5,6 @@ output "api_gateway_endpoint" {
 
 output "api_gateway_v1_api_key_value" {
   description = "Generated API Key to use for requests"
+  sensitive   = true
   value       = module.this.api_gateway_v1_api_key_value
 }

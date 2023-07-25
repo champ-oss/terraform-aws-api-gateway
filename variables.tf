@@ -204,4 +204,5 @@ variable "tags" {
 variable "zone_id" {
   description = "https://www.terraform.io/docs/providers/aws/r/route53_record.html#zone_id"
   type        = string
+  default     = null
 }

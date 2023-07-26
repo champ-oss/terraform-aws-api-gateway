@@ -11,11 +11,12 @@ resource "aws_api_gateway_rest_api" "this" {
 }
 
 resource "aws_api_gateway_method" "this" {
-  count         = var.enable_api_gateway_v1 ? 1 : 0
-  rest_api_id   = aws_api_gateway_rest_api.this[0].id
-  resource_id   = aws_api_gateway_rest_api.this[0].root_resource_id
-  http_method   = "ANY"
-  authorization = "NONE" # NOSONAR uses IP whitelisting
+  count            = var.enable_api_gateway_v1 ? 1 : 0
+  rest_api_id      = aws_api_gateway_rest_api.this[0].id
+  resource_id      = aws_api_gateway_rest_api.this[0].root_resource_id
+  http_method      = "ANY"
+  authorization    = "NONE" # NOSONAR uses IP whitelisting
+  api_key_required = var.enable_api_gateway_v1_api_key
 }
 
 resource "aws_api_gateway_method_settings" "this" {
@@ -86,7 +87,7 @@ resource "aws_api_gateway_stage" "this" {
 }
 
 resource "aws_api_gateway_domain_name" "this" {
-  count                    = var.enable_api_gateway_v1 ? 1 : 0
+  count                    = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_domain_name ? 1 : 0
   domain_name              = var.api_gateway_v1_domain_name
   tags                     = merge(local.tags, var.tags)
   regional_certificate_arn = var.enable_create_certificate ? module.acm_api_gateway_v1[0].arn : var.certificate_arn
@@ -98,7 +99,7 @@ resource "aws_api_gateway_domain_name" "this" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "this" {
-  count       = var.enable_api_gateway_v1 ? 1 : 0
+  count       = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_domain_name ? 1 : 0
   api_id      = aws_api_gateway_rest_api.this[0].id
   stage_name  = aws_api_gateway_stage.this[0].stage_name
   domain_name = aws_api_gateway_domain_name.this[0].domain_name
@@ -134,4 +135,29 @@ resource "aws_api_gateway_rest_api_policy" "this" {
 resource "aws_api_gateway_account" "this" {
   count               = var.enable_api_gateway_v1 ? 1 : 0
   cloudwatch_role_arn = aws_iam_role.this[0].arn
+}
+
+resource "aws_api_gateway_api_key" "this" {
+  count = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? 1 : 0
+  name  = "${var.git}-${random_string.this.result}"
+  value = var.api_gateway_v1_api_key_value
+  tags  = merge(local.tags, var.tags)
+}
+
+resource "aws_api_gateway_usage_plan" "this" {
+  count = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? 1 : 0
+  name  = "${var.git}-${random_string.this.result}"
+  tags  = merge(local.tags, var.tags)
+
+  api_stages {
+    api_id = aws_api_gateway_rest_api.this[0].id
+    stage  = aws_api_gateway_stage.this[0].stage_name
+  }
+}
+
+resource "aws_api_gateway_usage_plan_key" "this" {
+  count         = var.enable_api_gateway_v1 && var.enable_api_gateway_v1_api_key ? 1 : 0
+  key_id        = aws_api_gateway_api_key.this[0].id
+  key_type      = "API_KEY"
+  usage_plan_id = aws_api_gateway_usage_plan.this[0].id
 }

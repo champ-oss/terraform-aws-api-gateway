@@ -45,7 +45,6 @@ resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     aws_api_gateway_rest_api_policy.this,
     aws_api_gateway_method.this,
-    aws_api_gateway_method_settings.this,
     aws_api_gateway_integration.this
   ]
   count       = var.enable_api_gateway_v1 ? 1 : 0
@@ -54,7 +53,6 @@ resource "aws_api_gateway_deployment" "this" {
     redeployment = sha1(join(",", [
       jsonencode(aws_api_gateway_rest_api.this[0]),
       jsonencode(aws_api_gateway_method.this[0]),
-      jsonencode(aws_api_gateway_method_settings.this[0]),
       jsonencode(aws_api_gateway_integration.this[0]),
       var.enable_api_gateway_v1_api_key ? jsonencode(aws_api_gateway_usage_plan.this[0]) : "",
       jsonencode(var.cidr_blocks),

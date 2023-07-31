@@ -52,7 +52,6 @@ resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.this[0].id
   triggers = {
     redeployment = sha1(join(",", [
-      jsonencode(aws_api_gateway_rest_api.this[0]),
       jsonencode(aws_api_gateway_method.this[0]),
       jsonencode(aws_api_gateway_integration.this[0]),
       var.enable_api_gateway_v1_api_key ? jsonencode(aws_api_gateway_api_key.this[0]) : "",

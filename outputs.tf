@@ -39,11 +39,6 @@ output "method_id" {
   value       = aws_api_gateway_method.this.id
 }
 
-output "integration_id" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration"
-  value       = aws_api_gateway_integration.this.id
-}
-
 output "stage_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_stage#id"
   value       = aws_api_gateway_stage.this.id

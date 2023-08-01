@@ -9,14 +9,6 @@ resource "aws_api_gateway_rest_api" "this" {
   }
 }
 
-resource "aws_api_gateway_method" "this" {
-  rest_api_id      = aws_api_gateway_rest_api.this.id
-  resource_id      = aws_api_gateway_rest_api.this.root_resource_id
-  http_method      = "ANY"
-  authorization    = "NONE" # NOSONAR uses IP whitelisting
-  api_key_required = var.enable_api_key
-}
-
 resource "aws_api_gateway_method_settings" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   stage_name  = aws_api_gateway_stage.this.stage_name

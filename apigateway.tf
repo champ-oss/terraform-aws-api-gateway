@@ -64,7 +64,7 @@ resource "aws_api_gateway_stage" "this" {
   tags                 = merge(local.tags, var.tags)
 
   access_log_settings {
-    destination_arn = "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/apigateway/${aws_api_gateway_rest_api.this[0].name}"
+    destination_arn = "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/apigateway/${aws_api_gateway_rest_api.this.name}"
     format = jsonencode({
       "requestId" : "$context.requestId",
       "ip" : "$context.identity.sourceIp",

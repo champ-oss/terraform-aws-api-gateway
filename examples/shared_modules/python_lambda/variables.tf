@@ -31,3 +31,9 @@ variable "api_gateway_v1_resource_id" {
   type        = string
   default     = null
 }
+
+variable "create_api_gateway_v1_resource" {
+  description = "Create a API Gateway base resource. If disabled, an existing resource ID must be provided."
+  type        = bool
+  default     = true
+}

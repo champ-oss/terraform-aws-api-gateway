@@ -28,4 +28,5 @@ module "lambda" {
   api_gateway_v1_http_method        = var.api_gateway_v1_http_method
   api_gateway_v1_resource_path      = var.api_gateway_v1_resource_path
   api_gateway_v1_resource_id        = var.api_gateway_v1_resource_id
+  create_api_gateway_v1_resource    = var.create_api_gateway_v1_resource
 }

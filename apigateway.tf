@@ -37,27 +37,9 @@ resource "aws_api_gateway_integration" "this" {
   uri                     = "arn:aws:apigateway:${data.aws_region.this.name}:lambda:path/2015-03-31/functions/${var.lambda_arn}/invocations"
 }
 
-resource "aws_api_gateway_deployment" "this" {
-  depends_on  = [aws_api_gateway_rest_api_policy.this]
-  rest_api_id = aws_api_gateway_rest_api.this.id
-  triggers = {
-    redeployment = sha1(jsonencode([
-      aws_api_gateway_rest_api.this.id,
-      aws_api_gateway_rest_api.this.root_resource_id,
-      aws_api_gateway_method.this.id,
-      aws_api_gateway_integration.this.id,
-      var.cidr_blocks
-    ]))
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "aws_api_gateway_stage" "this" {
   depends_on           = [aws_api_gateway_account.this]
-  deployment_id        = aws_api_gateway_deployment.this.id
+  deployment_id        = var.api_gateway_deployment_id
   rest_api_id          = aws_api_gateway_rest_api.this.id
   stage_name           = "this"
   xray_tracing_enabled = true

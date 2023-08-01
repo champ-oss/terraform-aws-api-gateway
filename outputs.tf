@@ -29,3 +29,42 @@ output "private_subnet_ids" {
   value       = var.private_subnet_ids
 }
 
+output "rest_api_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#id"
+  value       = aws_api_gateway_rest_api.this.id
+}
+
+output "method_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method"
+  value       = aws_api_gateway_method.this.id
+}
+
+output "integration_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration"
+  value       = aws_api_gateway_integration.this.id
+}
+
+output "stage_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_stage#id"
+  value       = aws_api_gateway_stage.this.id
+}
+
+output "domain_name_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#id"
+  value       = var.enable_domain_name ? aws_api_gateway_domain_name.this.id : null
+}
+
+output "base_path_mapping_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_base_path_mapping"
+  value       = var.enable_domain_name ? aws_api_gateway_base_path_mapping.this.id : null
+}
+
+output "rest_api_policy_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api_policy#id"
+  value       = aws_api_gateway_rest_api_policy.this.id
+}
+
+output "usage_plan_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_usage_plan#id"
+  value       = var.enable_api_key ? aws_api_gateway_usage_plan.this.id : null
+}

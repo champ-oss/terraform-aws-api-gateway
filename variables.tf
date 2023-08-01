@@ -4,6 +4,11 @@ variable "api_key_value" {
   default     = null
 }
 
+variable "api_gateway_deployment_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_deployment#id"
+  type        = string
+}
+
 variable "domain_name" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#domain_name"
   type        = string

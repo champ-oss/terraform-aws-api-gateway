@@ -26,4 +26,6 @@ module "lambda" {
   api_gateway_v1_parent_resource_id = var.api_gateway_v1_parent_resource_id
   api_gateway_v1_path_part          = var.api_gateway_v1_path_part
   api_gateway_v1_http_method        = var.api_gateway_v1_http_method
+  api_gateway_v1_resource_path      = var.api_gateway_v1_resource_path
+  api_gateway_v1_resource_id        = var.api_gateway_v1_resource_id
 }

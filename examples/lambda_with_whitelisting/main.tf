@@ -40,18 +40,19 @@ module "this" {
 
 # Deploy Lambdas for API Gateway integration
 module "lambda1" {
-  source                            = "../shared_modules/python_lambda"
-  api_gateway_v1_rest_api_id        = module.this.rest_api_id
-  api_gateway_v1_parent_resource_id = module.this.root_resource_id
-  api_gateway_v1_path_part          = "test1"
-  api_gateway_v1_http_method        = "GET"
+  source                         = "../shared_modules/python_lambda"
+  create_api_gateway_v1_resource = false
+  api_gateway_v1_rest_api_id     = module.this.rest_api_id
+  api_gateway_v1_resource_id     = module.this.root_resource_id
+  api_gateway_v1_http_method     = "GET"
+  api_gateway_v1_resource_path   = "/"
 }
 
 module "lambda2" {
   source                            = "../shared_modules/python_lambda"
   api_gateway_v1_rest_api_id        = module.this.rest_api_id
   api_gateway_v1_parent_resource_id = module.this.root_resource_id
-  api_gateway_v1_path_part          = "test2"
+  api_gateway_v1_path_part          = "test"
   api_gateway_v1_http_method        = "GET"
 }
 

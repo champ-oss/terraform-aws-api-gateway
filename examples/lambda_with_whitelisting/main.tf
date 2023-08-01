@@ -60,7 +60,6 @@ resource "aws_api_gateway_deployment" "this" {
   triggers = {
     redeployment = sha1(jsonencode([
       module.this.root_resource_id,
-      module.this.integration_id,
       module.this.method_id,
       module.lambda1.api_gateway_v1_resource_id,
       module.lambda1.api_gateway_v1_method_id,

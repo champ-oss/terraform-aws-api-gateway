@@ -20,8 +20,11 @@ func TestLambdaWithWhitelisting(t *testing.T) {
 
 	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
 
-	apiGatewayEndpoint := terraform.Output(t, terraformOptions, "endpoint")
 	apiKey := terraform.Output(t, terraformOptions, "api_key_value")
 
-	assert.NoError(t, checkHttpStatusAndBody(t, apiGatewayEndpoint, apiKey, "successful", http.StatusOK))
+	rootEndpoint := terraform.Output(t, terraformOptions, "root_endpoint")
+	assert.NoError(t, checkHttpStatusAndBody(t, rootEndpoint, apiKey, "successful", http.StatusOK))
+
+	testPathEndpoint := terraform.Output(t, terraformOptions, "test_path_endpoint")
+	assert.NoError(t, checkHttpStatusAndBody(t, testPathEndpoint, apiKey, "successful", http.StatusOK))
 }

@@ -57,6 +57,7 @@ module "lambda2" {
 }
 
 resource "aws_api_gateway_deployment" "this" {
+  depends_on  = [module.lambda1, module.lambda2]
   rest_api_id = module.this.rest_api_id
   triggers = {
     redeployment = sha1(jsonencode([

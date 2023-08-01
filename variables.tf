@@ -69,21 +69,9 @@ variable "enable_api_key" {
   default     = false
 }
 
-variable "enable_lambda_integration" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
-  type        = bool
-  default     = false
-}
-
 variable "git" {
   description = "Name of the Git repo"
   type        = string
-}
-
-variable "lambda_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#arn"
-  type        = string
-  default     = null
 }
 
 variable "private_subnet_ids" {

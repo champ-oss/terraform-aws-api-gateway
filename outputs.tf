@@ -51,12 +51,12 @@ output "stage_id" {
 
 output "domain_name_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#id"
-  value       = var.enable_domain_name ? aws_api_gateway_domain_name.this.id : null
+  value       = var.enable_domain_name ? aws_api_gateway_domain_name.this[0].id : null
 }
 
 output "base_path_mapping_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_base_path_mapping"
-  value       = var.enable_domain_name ? aws_api_gateway_base_path_mapping.this.id : null
+  value       = var.enable_domain_name ? aws_api_gateway_base_path_mapping.this[0].id : null
 }
 
 output "rest_api_policy_id" {
@@ -66,5 +66,5 @@ output "rest_api_policy_id" {
 
 output "usage_plan_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_usage_plan#id"
-  value       = var.enable_api_key ? aws_api_gateway_usage_plan.this.id : null
+  value       = var.enable_api_key ? aws_api_gateway_usage_plan.this[0].id : null
 }

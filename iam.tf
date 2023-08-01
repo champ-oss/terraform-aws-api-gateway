@@ -1,19 +1,16 @@
 resource "aws_iam_role" "this" {
-  count              = var.enable_api_gateway_v1 ? 1 : 0
   name_prefix        = substr("${var.git}-apigateway-${random_string.this.result}-", 0, 36)
-  assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
   tags               = merge(local.tags, var.tags)
 }
 
 resource "aws_iam_role_policy" "this" {
-  count       = var.enable_api_gateway_v1 ? 1 : 0
   name_prefix = substr("${var.git}-apigateway-${random_string.this.result}-", 0, 36)
-  role        = aws_iam_role.this[0].id
-  policy      = data.aws_iam_policy_document.cloudwatch[0].json
+  role        = aws_iam_role.this.id
+  policy      = data.aws_iam_policy_document.cloudwatch.json
 }
 
 data "aws_iam_policy_document" "assume_role" {
-  count = var.enable_api_gateway_v1 ? 1 : 0
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -25,7 +22,6 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 data "aws_iam_policy_document" "cloudwatch" {
-  count = var.enable_api_gateway_v1 ? 1 : 0
   statement {
     actions = [
       "logs:CreateLogGroup",

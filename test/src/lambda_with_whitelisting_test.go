@@ -24,7 +24,9 @@ func TestLambdaWithWhitelisting(t *testing.T) {
 
 	rootEndpoint := terraform.Output(t, terraformOptions, "root_endpoint")
 	assert.NoError(t, checkHttpStatusAndBody(t, rootEndpoint, apiKey, "successful", http.StatusOK))
+	assert.NoError(t, checkHttpStatusAndBody(t, rootEndpoint, "", "", http.StatusUnauthorized))
 
 	testPathEndpoint := terraform.Output(t, terraformOptions, "test_path_endpoint")
 	assert.NoError(t, checkHttpStatusAndBody(t, testPathEndpoint, apiKey, "successful", http.StatusOK))
+	assert.NoError(t, checkHttpStatusAndBody(t, testPathEndpoint, "", "", http.StatusUnauthorized))
 }

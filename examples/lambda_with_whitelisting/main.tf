@@ -44,16 +44,17 @@ data "archive_file" "this" {
   output_path = "package.zip"
 }
 
-# Deploy Lambdas for API Gateway integration
 module "lambda1" {
-  source                          = "github.com/champ-oss/terraform-aws-lambda.git?ref=remove-api-gateway-deployment"
-  git                             = "terraform-aws-api-gateway"
-  name                            = "lambda1"
-  filename                        = data.archive_file.this.output_path
-  source_code_hash                = data.archive_file.this.output_base64sha256
-  handler                         = "app.handler"
-  runtime                         = "python3.9"
-  reserved_concurrent_executions  = 1
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=remove-api-gateway-deployment"
+  git                            = "terraform-aws-api-gateway"
+  name                           = "lambda1"
+  filename                       = data.archive_file.this.output_path
+  source_code_hash               = data.archive_file.this.output_base64sha256
+  handler                        = "app.handler"
+  runtime                        = "python3.9"
+  reserved_concurrent_executions = 1
+
+  # attach the lambda to the root of API Gateway
   enable_api_gateway_v1           = true
   create_api_gateway_v1_resource  = false
   api_gateway_v1_api_key_required = true
@@ -64,14 +65,16 @@ module "lambda1" {
 }
 
 module "lambda2" {
-  source                            = "github.com/champ-oss/terraform-aws-lambda.git?ref=remove-api-gateway-deployment"
-  git                               = "terraform-aws-api-gateway"
-  name                              = "lambda2"
-  filename                          = data.archive_file.this.output_path
-  source_code_hash                  = data.archive_file.this.output_base64sha256
-  handler                           = "app.handler"
-  runtime                           = "python3.9"
-  reserved_concurrent_executions    = 1
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=remove-api-gateway-deployment"
+  git                            = "terraform-aws-api-gateway"
+  name                           = "lambda2"
+  filename                       = data.archive_file.this.output_path
+  source_code_hash               = data.archive_file.this.output_base64sha256
+  handler                        = "app.handler"
+  runtime                        = "python3.9"
+  reserved_concurrent_executions = 1
+
+  # attach the lambda to /test path of API Gateway
   enable_api_gateway_v1             = true
   api_gateway_v1_api_key_required   = true
   api_gateway_v1_rest_api_id        = module.this.rest_api_id

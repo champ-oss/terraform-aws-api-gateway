@@ -16,12 +16,12 @@ output "api_key_value" {
 
 output "id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#id"
-  value       = aws_api_gateway_rest_api.this[0].id
+  value       = aws_api_gateway_rest_api.this.id
 }
 
 output "root_resource_id" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#root_resource_id"
-  value       = aws_api_gateway_rest_api.this[0].root_resource_id
+  value       = aws_api_gateway_rest_api.this.root_resource_id
 }
 
 output "private_subnet_ids" {

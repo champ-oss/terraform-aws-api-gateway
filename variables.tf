@@ -34,43 +34,6 @@ variable "cidr_blocks" {
   type        = list(string)
 }
 
-
-variable "cors_configuration_allow_credentials" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_credentials"
-  type        = bool
-  default     = null
-}
-
-variable "cors_configuration_allow_headers" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_headers"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_allow_methods" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_methods"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_allow_origins" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_origins"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_expose_headers" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#expose_headers"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_max_age" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#max_age"
-  type        = number
-  default     = null
-}
-
 variable "description" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#description"
   type        = string
@@ -107,55 +70,13 @@ variable "enable_lambda_integration" {
   default     = false
 }
 
-#variable "enable_lb_integration" {
-#  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
-#  type        = bool
-#  default     = false
-#}
-
 variable "git" {
   description = "Name of the Git repo"
   type        = string
 }
 
-#variable "identity_sources" {
-#  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#identity_sources"
-#  type        = list(string)
-#  default     = ["$request.header.Authorization"]
-#}
-
-variable "integration_method" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_method"
-  type        = string
-  default     = "POST"
-}
-
-#variable "jwt_audience" {
-#  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#audience"
-#  type        = list(string)
-#  default     = ["account"]
-#}
-#
-#variable "jwt_issuer" {
-#  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#issuer"
-#  type        = string
-#  default     = ""
-#}
-
 variable "lambda_arn" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#arn"
-  type        = string
-  default     = null
-}
-
-variable "lb_listener_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
-  type        = string
-  default     = null
-}
-
-variable "lb_domain_name" {
-  description = "Domain name the load balancer expects"
   type        = string
   default     = null
 }
@@ -170,12 +91,6 @@ variable "retention_in_days" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group#retention_in_days"
   type        = number
   default     = 365
-}
-
-variable "security_group_ids" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_vpc_link#security_group_ids"
-  type        = list(string)
-  default     = null
 }
 
 variable "tags" {

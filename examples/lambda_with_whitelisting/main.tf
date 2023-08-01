@@ -32,6 +32,21 @@ locals {
   hostname = "terraform-aws-api-gateway-${random_string.this.result}"
 }
 
+resource "aws_api_gateway_deployment" "this" {
+  rest_api_id = module.this.rest_api_id
+  triggers = {
+    redeployment = sha1(jsonencode([
+      module.this.root_resource_id,
+      module.this.integration_id,
+      module.this.method_id,
+    ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 module "this" {
   source                    = "../../"
   git                       = local.git
@@ -42,4 +57,5 @@ module "this" {
   lambda_arn                = module.lambda.arn
   cidr_blocks               = ["0.0.0.0/0"]
   enable_api_key            = true
+  api_gateway_deployment_id = aws_api_gateway_deployment.this.id
 }

@@ -14,11 +14,6 @@ data "aws_route53_zone" "this" {
   name = "oss.champtest.net."
 }
 
-# Deploy a Lambda for API Gateway integration
-module "lambda" {
-  source = "../shared_modules/python_lambda"
-}
-
 resource "random_string" "this" {
   length  = 5
   special = false
@@ -32,6 +27,34 @@ locals {
   hostname = "terraform-aws-api-gateway-${random_string.this.result}"
 }
 
+module "this" {
+  source                    = "../../"
+  git                       = local.git
+  domain_name               = "${local.hostname}.${data.aws_route53_zone.this.name}"
+  zone_id                   = data.aws_route53_zone.this.zone_id
+  enable_create_certificate = true
+  cidr_blocks               = ["0.0.0.0/0"]
+  enable_api_key            = true
+  api_gateway_deployment_id = aws_api_gateway_deployment.this.id
+}
+
+# Deploy Lambdas for API Gateway integration
+module "lambda1" {
+  source                            = "../shared_modules/python_lambda"
+  api_gateway_v1_rest_api_id        = module.this.rest_api_id
+  api_gateway_v1_parent_resource_id = module.this.root_resource_id
+  api_gateway_v1_path_part          = "test1"
+  api_gateway_v1_http_method        = "GET"
+}
+
+module "lambda2" {
+  source                            = "../shared_modules/python_lambda"
+  api_gateway_v1_rest_api_id        = module.this.rest_api_id
+  api_gateway_v1_parent_resource_id = module.this.root_resource_id
+  api_gateway_v1_path_part          = "test2"
+  api_gateway_v1_http_method        = "GET"
+}
+
 resource "aws_api_gateway_deployment" "this" {
   rest_api_id = module.this.rest_api_id
   triggers = {
@@ -39,23 +62,16 @@ resource "aws_api_gateway_deployment" "this" {
       module.this.root_resource_id,
       module.this.integration_id,
       module.this.method_id,
+      module.lambda1.api_gateway_v1_resource_id,
+      module.lambda1.api_gateway_v1_method_id,
+      module.lambda1.api_gateway_v1_integration_id,
+      module.lambda2.api_gateway_v1_resource_id,
+      module.lambda2.api_gateway_v1_method_id,
+      module.lambda2.api_gateway_v1_integration_id
     ]))
   }
 
   lifecycle {
     create_before_destroy = true
   }
-}
-
-module "this" {
-  source                    = "../../"
-  git                       = local.git
-  domain_name               = "${local.hostname}.${data.aws_route53_zone.this.name}"
-  zone_id                   = data.aws_route53_zone.this.zone_id
-  enable_create_certificate = true
-  enable_lambda_integration = true
-  lambda_arn                = module.lambda.arn
-  cidr_blocks               = ["0.0.0.0/0"]
-  enable_api_key            = true
-  api_gateway_deployment_id = aws_api_gateway_deployment.this.id
 }

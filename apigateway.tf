@@ -125,7 +125,7 @@ resource "aws_api_gateway_rest_api_policy" "this" {
 }
 
 resource "aws_api_gateway_account" "this" {
-  cloudwatch_role_arn = aws_iam_role.this[0].arn
+  cloudwatch_role_arn = aws_iam_role.this.arn
 }
 
 resource "aws_api_gateway_api_key" "this" {

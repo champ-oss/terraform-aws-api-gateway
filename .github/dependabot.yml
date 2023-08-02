@@ -11,11 +11,6 @@ updates:
     schedule:
       interval: "daily"
 
-  - package-ecosystem: "terraform"
-    directory: "/examples/complete/shared_modules"
-    schedule:
-      interval: "daily"
-
   - package-ecosystem: "gomod"
     directory: "/test/src"
     schedule:

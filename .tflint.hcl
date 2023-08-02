@@ -63,7 +63,3 @@ rule "terraform_module_pinned_source" {
 rule "module_call_using_hash" {
   enabled = false
 }
-
-rule "resource_count" {
-  enabled = false
-}

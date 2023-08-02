@@ -16,11 +16,17 @@ func TestLambdaWithWhitelisting(t *testing.T) {
 		EnvVars:       map[string]string{},
 		Vars:          map[string]interface{}{},
 	}
-	defer destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
 
-	apiGatewayEndpoint := terraform.Output(t, terraformOptions, "api_gateway_endpoint")
+	apiKey := terraform.Output(t, terraformOptions, "api_key_value")
 
-	assert.NoError(t, checkHttpStatusAndBody(t, apiGatewayEndpoint, "", "successful", http.StatusOK))
+	rootEndpoint := terraform.Output(t, terraformOptions, "root_endpoint")
+	assert.NoError(t, checkHttpStatusAndBody(t, rootEndpoint, apiKey, "successful", http.StatusOK))
+	assert.NoError(t, checkHttpStatusAndBody(t, rootEndpoint, "", "{\"message\":\"Forbidden\"}", http.StatusForbidden))
+
+	testPathEndpoint := terraform.Output(t, terraformOptions, "test_path_endpoint")
+	assert.NoError(t, checkHttpStatusAndBody(t, testPathEndpoint, apiKey, "successful", http.StatusOK))
+	assert.NoError(t, checkHttpStatusAndBody(t, testPathEndpoint, "", "{\"message\":\"Forbidden\"}", http.StatusForbidden))
 }

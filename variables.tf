@@ -1,28 +1,27 @@
-variable "api_gateway_v1_api_key_value" {
+variable "api_key_value" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key#value"
   type        = string
   default     = null
 }
 
-variable "api_gateway_v1_domain_name" {
+variable "api_gateway_deployment_id" {
+  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_deployment#id"
+  type        = string
+}
+
+variable "domain_name" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name#domain_name"
   type        = string
   default     = null
 }
 
-variable "api_gateway_v2_domain_name" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_domain_name#domain_name"
-  type        = string
-  default     = null
-}
-
-variable "api_gateway_v1_endpoint_type" {
+variable "endpoint_type" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api#types"
   type        = string
   default     = "REGIONAL"
 }
 
-variable "api_gateway_v1_logging_level" {
+variable "logging_level" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_settings#logging_level"
   type        = string
   default     = "INFO"
@@ -38,42 +37,6 @@ variable "cidr_blocks" {
   description = "IP CIDR ranges to whitelist (maximum of around 400 IP ranges)"
   default     = ["0.0.0.0/0"]
   type        = list(string)
-}
-
-variable "cors_configuration_allow_credentials" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_credentials"
-  type        = bool
-  default     = null
-}
-
-variable "cors_configuration_allow_headers" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_headers"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_allow_methods" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_methods"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_allow_origins" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#allow_origins"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_expose_headers" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#expose_headers"
-  type        = list(string)
-  default     = null
-}
-
-variable "cors_configuration_max_age" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api#max_age"
-  type        = number
-  default     = null
 }
 
 variable "description" {
@@ -94,38 +57,14 @@ variable "enable_create_certificate" {
   default     = true
 }
 
-variable "enable_api_gateway_v1" {
-  description = "Supports IP whitelisting"
-  type        = bool
-  default     = false
-}
-
-variable "enable_api_gateway_v1_domain_name" {
+variable "enable_domain_name" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name"
   type        = bool
   default     = true
 }
 
-variable "enable_api_gateway_v1_api_key" {
+variable "enable_api_key" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_api_key"
-  type        = bool
-  default     = false
-}
-
-variable "enable_api_gateway_v2" {
-  description = "Supports JWT authorization"
-  type        = bool
-  default     = false
-}
-
-variable "enable_lambda_integration" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
-  type        = bool
-  default     = false
-}
-
-variable "enable_lb_integration" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
   type        = bool
   default     = false
 }
@@ -133,48 +72,6 @@ variable "enable_lb_integration" {
 variable "git" {
   description = "Name of the Git repo"
   type        = string
-}
-
-variable "identity_sources" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#identity_sources"
-  type        = list(string)
-  default     = ["$request.header.Authorization"]
-}
-
-variable "integration_method" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_method"
-  type        = string
-  default     = "POST"
-}
-
-variable "jwt_audience" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#audience"
-  type        = list(string)
-  default     = ["account"]
-}
-
-variable "jwt_issuer" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_authorizer#issuer"
-  type        = string
-  default     = ""
-}
-
-variable "lambda_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#arn"
-  type        = string
-  default     = null
-}
-
-variable "lb_listener_arn" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration#integration_uri"
-  type        = string
-  default     = null
-}
-
-variable "lb_domain_name" {
-  description = "Domain name the load balancer expects"
-  type        = string
-  default     = null
 }
 
 variable "private_subnet_ids" {
@@ -187,12 +84,6 @@ variable "retention_in_days" {
   description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group#retention_in_days"
   type        = number
   default     = 365
-}
-
-variable "security_group_ids" {
-  description = "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_vpc_link#security_group_ids"
-  type        = list(string)
-  default     = null
 }
 
 variable "tags" {

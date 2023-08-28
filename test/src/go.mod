@@ -3,7 +3,7 @@ module github.com/champ-oss/terraform-aws-api-gateway
 go 1.19
 
 require (
-	github.com/gruntwork-io/terratest v0.43.11
+	github.com/gruntwork-io/terratest v0.43.13
 	github.com/stretchr/testify v1.8.2
 )
 

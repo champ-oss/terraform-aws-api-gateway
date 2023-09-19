@@ -1,13 +1,6 @@
-terraform {
-  backend "s3" {
-    bucket = "env-tfbackend-oss-backend"
-    key    = "terraform-aws-api-gateway-lambda_with_whitelisting"
-    region = "us-east-2"
-  }
-}
-
-provider "aws" {
-  region = "us-east-2"
+locals {
+  git      = "terraform-aws-api-gateway"
+  hostname = "terraform-aws-api-gateway-${random_string.this.result}"
 }
 
 data "aws_route53_zone" "this" {
@@ -20,11 +13,6 @@ resource "random_string" "this" {
   upper   = false
   lower   = true
   numeric = true
-}
-
-locals {
-  git      = "terraform-aws-api-gateway"
-  hostname = "terraform-aws-api-gateway-${random_string.this.result}"
 }
 
 module "this" {
@@ -101,4 +89,20 @@ resource "aws_api_gateway_deployment" "this" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+output "root_endpoint" {
+  description = "URL endpoint of API Gateway"
+  value       = "https://${local.hostname}.${data.aws_route53_zone.this.name}"
+}
+
+output "test_path_endpoint" {
+  description = "URL endpoint of API Gateway with test path"
+  value       = "https://${local.hostname}.${data.aws_route53_zone.this.name}/test"
+}
+
+output "api_key_value" {
+  description = "Generated API Key to use for requests"
+  sensitive   = true
+  value       = module.this.api_key_value
 }

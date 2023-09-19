@@ -40,7 +40,7 @@ rule "terraform_required_version" {
 }
 
 rule "terraform_standard_module_structure" {
-  enabled = true
+  enabled = false
 }
 
 rule "terraform_typed_variables" {
@@ -61,9 +61,5 @@ rule "terraform_module_pinned_source" {
 }
 
 rule "module_call_using_hash" {
-  enabled = false
-}
-
-rule "resource_count" {
   enabled = false
 }

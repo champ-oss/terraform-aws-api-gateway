@@ -53,7 +53,7 @@ module "lambda1" {
 }
 
 module "lambda2" {
-  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.123-b504524"
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.128-ed7eaf4"
   git                            = "terraform-aws-api-gateway"
   name                           = "lambda2"
   filename                       = data.archive_file.this.output_path

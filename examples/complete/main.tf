@@ -33,7 +33,7 @@ data "archive_file" "this" {
 }
 
 module "lambda1" {
-  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.129-a9ea64d"
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.130-9ccdb0e"
   git                            = "terraform-aws-api-gateway"
   name                           = "lambda1"
   filename                       = data.archive_file.this.output_path

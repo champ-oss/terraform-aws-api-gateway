@@ -91,6 +91,12 @@ resource "aws_api_gateway_rest_api_policy" "this" {
 
 resource "aws_api_gateway_account" "this" {
   cloudwatch_role_arn = aws_iam_role.this.arn
+
+  lifecycle {
+    ignore_changes = [
+      cloudwatch_role_arn,
+    ]
+  }
 }
 
 resource "aws_api_gateway_api_key" "this" {

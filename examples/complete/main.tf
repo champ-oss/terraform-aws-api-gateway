@@ -51,7 +51,7 @@ data "archive_file" "this" {
 }
 
 module "lambda1" {
-  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.142-273b055"
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.147-dd45619"
   git                            = "terraform-aws-api-gateway"
   name                           = "lambda1"
   filename                       = data.archive_file.this.output_path
@@ -71,7 +71,7 @@ module "lambda1" {
 }
 
 module "lambda2" {
-  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.142-273b055"
+  source                         = "github.com/champ-oss/terraform-aws-lambda.git?ref=v1.0.147-dd45619"
   git                            = "terraform-aws-api-gateway"
   name                           = "lambda2"
   filename                       = data.archive_file.this.output_path
